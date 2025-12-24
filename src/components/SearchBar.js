@@ -14,12 +14,15 @@ function SearchBar({ search, setSearch }) {
 const styles = {
   container: {
     padding: "10px",
-    background: "#f5f5f5"
+    background: "#f5f5f5",
+    width: "100%",          
+    boxSizing: "border-box"
   },
   input: {
-    width: "97%",
+    width: "100%",
     padding: "10px",
-    fontSize: "16px"
+    fontSize: "16px",
+    boxSizing: "border-box"
   }
 };
 
