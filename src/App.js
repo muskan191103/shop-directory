@@ -16,6 +16,7 @@ function App() {
   const [activeTab, setActiveTab] = useState("view");
   const [exportData, setExportData] = useState([]);
   const [search, setSearch] = useState("");
+  const [editingContact, setEditingContact] = useState(null);
 
   useEffect(() => {
     const auth = getAuth();
@@ -31,17 +32,17 @@ function App() {
   return (
     <div>
       <Header />
-      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} /> 
+      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} setEditingContact={setEditingContact}/> 
       {activeTab === "view" && <ExportButton data={exportData} />}
       {activeTab === "view" ?(
         <SearchBar search={search} setSearch={setSearch} />) 
         : null}
 
       {activeTab === "view" ? (
-        <ViewContacts search={search} setExportData={setExportData} />
+        <ViewContacts search={search} setExportData={setExportData} setEditingContact={setEditingContact} setActiveTab={setActiveTab}/>
 
       ) : (
-        <AddContactForm />
+        <AddContactForm editingContact={editingContact} setEditingContact={setEditingContact}/>
       )}
     </div>
   );

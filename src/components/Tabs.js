@@ -1,15 +1,20 @@
-function Tabs({ activeTab, setActiveTab }) {
+function Tabs({ activeTab, setActiveTab, setEditingContact }) {
   return (
     <div style={styles.container}>
       <button
-        onClick={() => setActiveTab("view")}
+        onClick={() => { 
+          setActiveTab("view");
+          setEditingContact(null);
+        }}
         style={activeTab === "view" ? styles.active : styles.button}
       >
         View Contacts
       </button>
 
       <button
-        onClick={() => setActiveTab("add")}
+        onClick={() => { 
+          setActiveTab("add"); 
+          setEditingContact(null);}}
         style={activeTab === "add" ? styles.active : styles.button}
       >
         Add Contact

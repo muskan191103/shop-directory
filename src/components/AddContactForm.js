@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 
-function AddContactForm() {
+function AddContactForm({ editingContact, setEditingContact }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState("");
   const [duplicateData, setDuplicateData] = useState(null);
   const [showDuplicateModal, setShowDuplicateModal] = useState(false);
+  const [secondaryPhone, setSecondaryPhone] = useState("");
+
+  useEffect(() => {
+    if (editingContact) {
+      setName(editingContact.name || "");
+      setPhone(editingContact.primaryPhone || editingContact.phone || "");
+      setSecondaryPhone(editingContact.secondaryPhone || "");
+      setLocation(editingContact.location || "");
+    }
+  }, [editingContact]);
 
   const keepExisting = () => {
     setShowDuplicateModal(false);
@@ -22,14 +32,18 @@ function AddContactForm() {
   const resetForm = () => {
     setName("");
     setPhone("");
+    setSecondaryPhone("");
     setLocation("");
     setDuplicateData(null);
+    setEditingContact(null);
   };
 
   const saveNewContact = async (isUpdate = false) => {
     const data = {
       name,
       phone,
+      primaryPhone: phone,
+      secondaryPhone: secondaryPhone || "",
       location,
       shopId: "shop_001",
       updatedAt: serverTimestamp()
@@ -44,12 +58,19 @@ function AddContactForm() {
 
     alert("Contact saved successfully");
     resetForm();
+    setEditingContact(null);
   };
 
 
   const addContact = async () => {
     if (!name || !phone || !location) {
       alert("Please fill all fields");
+      return;
+    }
+
+    if (editingContact) {
+      await saveNewContact(true);
+      setEditingContact(null);
       return;
     }
 
@@ -88,39 +109,67 @@ function AddContactForm() {
         onChange={(e) => setPhone(e.target.value)}
       />
 
+      <input
+        placeholder="Additional Phone (optional)"
+        value={secondaryPhone}
+        onChange={(e) => setSecondaryPhone(e.target.value)}
+        style={styles.input}
+      />
+
+
       <button style={styles.button} onClick={addContact}>
-        Save Contact
+        {editingContact ? "Update Contact" : "Save Contact"}
       </button>
 
+      
+      <button
+        onClick={() => {
+          resetForm();
+          setEditingContact(null);
+        }}
+        style={{
+          marginTop: "10px",
+          width: "100%",
+          padding: "10px",
+          background: "#999",
+          color: "white",
+          border: "none",
+          cursor: "pointer"
+        }}
+      >
+        Cancel
+      </button>
+
+
       {showDuplicateModal && (
-      <div style={styles.modalOverlay}>
-        <div style={styles.modal}>
-          <h3>Duplicate Phone Number</h3>
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h3>Duplicate Phone Number</h3>
 
-          <p><b>Existing Contact:</b></p>
-          <p>Name: {duplicateData?.name}</p>
-          <p>Location: {duplicateData?.location}</p>
-          <p>Phone: {duplicateData?.phone}</p>
+            <p><b>Existing Contact:</b></p>
+            <p>Name: {duplicateData?.name}</p>
+            <p>Location: {duplicateData?.location}</p>
+            <p>Phone: {duplicateData?.phone}</p>
 
-          <div style={{ marginTop: "15px" }}>
-            <button style={styles.modalBtn} onClick={keepExisting}>
-              Keep Existing
-            </button>
+            <div style={{ marginTop: "15px" }}>
+              <button style={styles.modalBtn} onClick={keepExisting}>
+                Keep Existing
+              </button>
 
-            <button style={styles.modalBtn} onClick={replaceExisting}>
-              Replace with New
-            </button>
+              <button style={styles.modalBtn} onClick={replaceExisting}>
+                Replace with New
+              </button>
 
-            <button
-              style={{ ...styles.modalBtn, background: "#999" }}
-              onClick={() => setShowDuplicateModal(false)}
-            >
-              Cancel
-            </button>
+              <button
+                style={{ ...styles.modalBtn, background: "#999" }}
+                onClick={() => setShowDuplicateModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
 
     </div>
   );
