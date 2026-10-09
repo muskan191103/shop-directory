@@ -1,70 +1,164 @@
-# Getting Started with Create React App
+# Shop Directory Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web-based contact management application built using **React.js and Firebase** to organize, search, and manage shop contact information efficiently.
 
-## Available Scripts
+The application provides secure authentication, real-time cloud data storage, advanced search and filtering, and Excel export functionality through a simple, responsive interface.
 
-In the project directory, you can run:
+### [Live Demo](https://maya-stationary-phonebook.web.app)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 1. Shop Contact Management
+- Add, view, edit, and delete shop contact records.
+- Store shop names, locations, and multiple phone numbers.
+- Manage contact information through an organized interface.
+- Update records directly in the cloud database.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. Advanced Search and Filtering
+- Search shops by name, location, or phone number.
+- Quickly locate records without manually browsing the directory.
+- Filter contact records for easier navigation.
 
-### `npm test`
+### 3. Secure Authentication
+- User authentication using Firebase Authentication.
+- Restricted access to authorized users.
+- Protected contact management functionality to prevent unauthorized modifications.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 4. Excel Export
+- Export shop contact information into an Excel-compatible file.
+- Simplify offline record management, reporting, and data sharing.
 
-### `npm run build`
+### 5. Cloud-Based Data Management
+- Firebase Cloud Firestore for persistent contact storage.
+- Support for creating, updating, retrieving, and deleting records.
+- Cloud-hosted application accessible through a web browser.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Category | Technologies |
+|---|---|
+| Frontend | React.js, JavaScript, HTML, CSS |
+| Authentication | Firebase Authentication |
+| Database | Cloud Firestore |
+| Hosting | Firebase Hosting |
+| Version Control | Git, GitHub |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Application Architecture
 
-### `npm run eject`
+The application follows a client-side architecture integrated with Firebase services.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```text
+                   User
+                    |
+                    v
+             React.js Frontend
+                    |
+           +--------+--------+
+           |                 |
+           v                 v
+    Firebase Auth      Cloud Firestore
+           |                 |
+     User Sign-in       Contact Records
+     Access Control     CRUD Operations
+                             |
+                             v
+                      Search / Filter
+                      Excel Export
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### How It Works
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Users authenticate through Firebase Authentication.
+2. Authorized users access the shop directory interface.
+3. Contact records are retrieved from Cloud Firestore.
+4. Users can search, filter, add, update, or delete shop records.
+5. Contact data can be exported for offline use.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Screenshots
 
-## Learn More
+### Dashboard
+![Shop Directory Dashboard](assets/Dashboard.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Add / Edit Contact
+![Add Contact](assets/Add_Contact.png)
+![Edit Contact](assets/Edit_Contact.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Search and Filtering
+![Search Functionality](assets/search.png)
 
-### Code Splitting
+## Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Prerequisites
 
-### Analyzing the Bundle Size
+- Node.js and npm
+- A Firebase project with Authentication and Firestore configured
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 1. Clone the Repository
 
-### Making a Progressive Web App
+```bash
+git clone https://github.com/muskan191103/shop-directory.git
+cd shop-directory
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 2. Install Dependencies
 
-### Advanced Configuration
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 3. Configure Firebase
 
-### Deployment
+Set up a Firebase project and enable the authentication provider used by the application, along with Cloud Firestore.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Configure the Firebase initialization file with your project's web app configuration.
 
-### `npm run build` fails to minify
+Ensure that Firestore security rules restrict access appropriately.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> Firebase web configuration is not a substitute for authentication and database security rules. Never commit service-account private keys or other secrets.
+
+### 4. Start the Development Server
+
+For a Create React App setup:
+
+```bash
+npm start
+```
+
+For a Vite setup:
+
+```bash
+npm run dev
+```
+
+Use the command supported by the repository's `package.json`.
+
+## Deployment
+
+The application is deployed using **Firebase Hosting**.
+
+Live application: https://maya-stationary-phonebook.web.app
+
+For a configured Firebase Hosting project, deployment can be performed using:
+
+```bash
+firebase deploy --only hosting
+```
+
+## Future Improvements
+
+- Bulk import of shop records from Excel or CSV files.
+- Duplicate contact detection and merging.
+- Pagination for larger contact directories.
+- More granular role-based access control.
+- Improved mobile responsiveness and usability.
+
+## Author
+
+**Muskan Agrawal**
+
+- [GitHub](https://github.com/muskan191103)
+- [LinkedIn](https://www.linkedin.com/in/muskan-agrawal-95b551280/)
+
+## License
+
+No open-source license is specified for this project. All rights are reserved unless a license is added.
